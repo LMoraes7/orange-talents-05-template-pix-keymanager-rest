@@ -20,7 +20,7 @@ class HandlerController : ExceptionHandler<StatusRuntimeException, HttpResponse<
 
         val (httpStatus, mensagem) =
             when (codigo) {
-                Status.INVALID_ARGUMENT.code -> Pair(HttpStatus.BAD_REQUEST, "Dados da requisição são inválidos")
+                Status.INVALID_ARGUMENT.code -> Pair(HttpStatus.BAD_REQUEST, descricao)
                 Status.ALREADY_EXISTS.code -> Pair(HttpStatus.UNPROCESSABLE_ENTITY, descricao)
                 Status.NOT_FOUND.code -> Pair(HttpStatus.NOT_FOUND, descricao)
                 Status.PERMISSION_DENIED.code -> Pair(HttpStatus.FORBIDDEN, descricao)

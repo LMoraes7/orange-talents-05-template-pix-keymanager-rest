@@ -21,7 +21,7 @@ class ConsultarChavePixController(
     private val grpcClient: ChavePixUnicaConsultarServiceGrpc.ChavePixUnicaConsultarServiceBlockingStub,
 ) {
 
-    @Get("cliente/{clienteId}/pix/{pixId}")
+    @Get("/cliente/{clienteId}/pix/{pixId}")
     fun consultarPorClienteEPixId(
         @PathVariable @IsUUID clienteId: String,
         @PathVariable pixId: String,
@@ -39,7 +39,7 @@ class ConsultarChavePixController(
         return converterParaDtoERetornarResposta(response)
     }
 
-    @Get("/{chave}")
+    @Get("/chave/{chave}")
     fun consultarPorChave(@PathVariable chave: String): HttpResponse<Any> {
         val response = ChavePixUnicaConsultarRequest.newBuilder()
             .setChave(chave)

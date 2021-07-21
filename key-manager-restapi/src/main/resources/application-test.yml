@@ -1,0 +1,13 @@
+micronaut:
+  application:
+    name: rest
+
+grpc:
+  client:
+    plaintext: true
+    max-retry-attempts: 5
+  channels:
+    pixManager:
+      address: 'localhost:50051'
+      plaintext: true
+      max-retry-attempts: 5

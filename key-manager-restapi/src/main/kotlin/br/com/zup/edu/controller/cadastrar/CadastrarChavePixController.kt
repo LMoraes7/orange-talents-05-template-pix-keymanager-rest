@@ -26,8 +26,6 @@ class CadastrarChavePixController(
         return HttpResponse.created<Any>(
             UriBuilder.of("/api/pix/consultar/{pixId}")
                 .expand(mutableMapOf(Pair("pixId", response.pixId)))
-        ).body(object {
-            val pixId = response.pixId
-        })
+        )
     }
 }
