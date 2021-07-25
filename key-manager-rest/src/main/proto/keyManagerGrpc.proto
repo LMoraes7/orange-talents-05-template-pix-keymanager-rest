@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.zup.edu";
+option java_outer_classname = "KeyManagerGrpc";
+option objc_class_prefix = "HLW";
+
+package br.com.zup.edu;
+
+service CadastrarChavePixService {
+  rpc cadastrar (NovaChavePixRequestGrpc) returns (NovaChavePixResponseGrpc) {}
+}
+
+service RemoverChavePixService {
+  rpc remover (RemoverChavePixRequestGrpc) returns (RemoverChavePixResponseGrpc) {}
+}
+
+service ConsultarChavePixService {
+  rpc consultar (ConsultarChavePixRequestGrpc) returns (ConsultarChavePixResponseGrpc) {}
+}
+
+service ConsultarTodasChavePixService {
+  rpc consultar (ConsultarTodasChavePixRequestGrpc) returns (ConsultarTodasChavePixResponseGrpc) {}
+}
+
+message ConsultarTodasChavePixRequestGrpc {
+  string clienteId = 1;
+}
+
+message ConsultarTodasChavePixResponseGrpc {
+  message DetalhesChavePix {
+    string pixId = 1;
+    string clienteId = 2;
+    string tipoChave = 3;
+    string chave = 4;
+    string tipoConta = 5;
+    string registradaEm = 6;
+  }
+  repeated DetalhesChavePix chavesPix = 1;
+}
+
+message ConsultarChavePixRequestGrpc {
+  message FiltroPoPixId {
+    string clienteId = 1;
+    string pixId = 2;
+  }
+
+  //oneof indica para o gRPC que apenas um dos campos deve ser preenchido
+  oneof filtro {
+    FiltroPoPixId pixId = 1;
+    string chave = 2;
+  }
+}
+
+message ConsultarChavePixResponseGrpc {
+  string pixId = 1;
+  string clienteId = 2;
+  string tipoChave = 3;
+  string chave = 4;
+
+  message Titular {
+    string nome = 1;
+    string cpf = 2;
+  }
+
+  Titular titular = 5;
+
+  message Conta {
+    string instituicao = 1;
+    string agencia = 2;
+    string numero = 3;
+    string tipoConta = 4;
+  }
+
+  Conta conta = 6;
+  string registradaEm = 7;
+}
+
+message RemoverChavePixRequestGrpc {
+  string pixId = 1;
+  string clienteId = 2;
+}
+
+message RemoverChavePixResponseGrpc {
+  bool removida = 1;
+}
+
+message NovaChavePixRequestGrpc {
+  string clienteId = 1;
+  TipoChaveGrpc tipoChave = 2;
+  optional string chave = 3;
+  TipoContaGrpc tipoConta = 4;
+}
+
+message NovaChavePixResponseGrpc {
+  string clienteId = 1;
+  string pixIdInterno = 2;
+}
+
+enum TipoChaveGrpc {
+  CHAVE_DESCONHECIDA = 0;
+  CPF = 1;
+  CNPJ = 2;
+  CELULAR = 3;
+  EMAIL = 4;
+  ALEATORIA = 5;
+}
+
+enum TipoContaGrpc{
+  CONTA_DESCONHECIDA = 0;
+  CONTA_CORRENTE = 1;
+  CONTA_POUPANCA = 2;
+}
