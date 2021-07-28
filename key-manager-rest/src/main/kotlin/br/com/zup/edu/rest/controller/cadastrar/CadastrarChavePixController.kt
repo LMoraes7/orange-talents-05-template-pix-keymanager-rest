@@ -21,7 +21,6 @@ class CadastrarChavePixController(
         @Body request: NovaChavePixDto,
     ): HttpResponse<Any> {
         val responseGrpc = this.grpcClient.cadastrar(request.paraRequestGrpc(clienteId))
-
         return UriBuilder.of("/pix/consultar/cliente/{clienteId}/pix/{pixId}")
             .expand(mutableMapOf(
                 Pair("clienteId", responseGrpc.clienteId),
